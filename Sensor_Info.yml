@@ -1,11 +1,12 @@
 Atlas_Temp:
-  "Name": "TEMP"
+  Name: "TEMP"
   Rate: 1
   Port: '/dev/ttyUSB0'
   Baud: 9600
   Read_Line: False
   Return_Symbol: "\r"
   Extra_Char: 0
+  # Send: "C,1<cr>"
 
 Atlas_Conductivity:
   Name: "COND"
@@ -15,12 +16,13 @@ Atlas_Conductivity:
   Read_Line: False
   Return_Symbol: "\r"
   Extra_Char: 0
+  # Send: "C,1<cr>"
 
-Pressure:
-  Name: "PRES"
-  Rate: 1
-  Port: '/dev/ttyAMC0'
-  Baud: 9600
-  Read_Line: True
-  Return_Symbol: "\r"
-  Extra_Char: 1
+# Pressure:
+#   Name: "PRES"
+#   Rate: 1
+#   Port: '/dev/ttyAMC0'
+#   Baud: 9600
+#   Read_Line: True
+#   Return_Symbol: "\r"
+#   Extra_Char: 1
