@@ -7,7 +7,7 @@ import multiprocessing
 
 class Sensor:
       
-    def __init__(self,name,rate, port,baud,return_symbol,extra_char,read_line):
+    def __init__(self,name,rate, port,baud,return_symbol,extra_char,read_line,date_time):
         """
         Creates empty variables and reads yaml file
         """
@@ -24,16 +24,18 @@ class Sensor:
         self.extra_char = extra_char
         self.read_line = read_line
         self.rate = rate
+        self.date_time = date_time
 
         #write header row to csv file
-        with open('sensor_data/'+self.name+".csv", "w") as file:
+        with open('sensor_data/'+self.name+self.date_time+".csv", "w") as file:
             csv_writer = csv.writer(file)
             csv_writer.writerow([name, "Date/Time", "Exact Time [ns]"])
 
         #establish serial connection
         self.ser = serial.Serial(port,baud,timeout=1)
-        self.ser.write(b'C,1<cr>')
-        print("Sensor 0 Command Sent")
+        self.ser.flush()
+        # self.ser.write(b'C,1<cr>')
+        # print("Sensor 0 Command Sent")
 
 
     def new_thread(self):
@@ -80,7 +82,10 @@ class Sensor:
                 
                 #line by line logging
                 else:
-                    self.readings = self.ser.readline().decode()
+                    self.reading = self.ser.readline().decode()
+                    self.reading = self.reading[0:-2]
+                    self.value = self.reading.split(",")
+                    self.value = list(map(int, self.value))
                     self.ready = True
 
             #if one second has elapsed and there is a reading ready, log it
@@ -89,6 +94,7 @@ class Sensor:
             # print(self.readings)
             # print(self.value)
             if current_time - cycle_start >= (1/self.rate) * 1*10**9 and self.ready == True:
+                print("Logging...")
                 self.log()
                 self.ready = False
                 self.readings = []
@@ -100,7 +106,8 @@ class Sensor:
         """ 
         Log a prepared reading, along with the date and time at which it was logged
         """
-        with open('sensor_data/'+self.name+".csv", "a",newline='') as file:
+        print(self.value)
+        with open('sensor_data/'+self.name+self.date_time+".csv", "a",newline='') as file:
             csv_writer = csv.writer(file)
             csv_writer.writerow([self.value, datetime.now(), time.perf_counter_ns()])
         

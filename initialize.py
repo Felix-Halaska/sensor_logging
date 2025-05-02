@@ -1,5 +1,6 @@
 import yaml
 from main_logging import Sensor
+from datetime import datetime
 
 
 with open('Sensor_Info.yml') as f:
@@ -19,12 +20,13 @@ for sensor in sensor_list:
     return_symbol = sensor_info[sensor]["Return_Symbol"]
     extra_char = sensor_info[sensor]["Extra_Char"]
     read_line = sensor_info[sensor]["Read_Line"]
+    date_time = str(datetime.now())
 
-    with open('sensor_data/'+name+'.csv', 'w') as creating_new_csv_file: 
+    with open('sensor_data/'+name+date_time+'.csv', 'w') as creating_new_csv_file: 
         pass 
     print("Empty File Created Successfully")
 
-    sensor = Sensor(name,rate,port,baud,return_symbol,extra_char,read_line)
+    sensor = Sensor(name,rate,port,baud,return_symbol,extra_char,read_line,date_time)
     sensors.append(sensor)
     Sensor.new_thread(sensor)
 
