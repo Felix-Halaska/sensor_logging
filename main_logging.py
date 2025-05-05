@@ -83,9 +83,10 @@ class Sensor:
                 #line by line logging
                 else:
                     self.reading = self.ser.readline().decode()
+                    print(self.reading)
                     self.reading = self.reading[0:-2]
-                    self.value = self.reading.split(",")
-                    self.value = list(map(int, self.value))
+                    self.value = self.reading
+                    #self.value = list(map(int, self.value))
                     self.ready = True
 
             #if one second has elapsed and there is a reading ready, log it
@@ -94,7 +95,7 @@ class Sensor:
             # print(self.readings)
             # print(self.value)
             if current_time - cycle_start >= (1/self.rate) * 1*10**9 and self.ready == True:
-                print("Logging...")
+                #print("Logging...")
                 self.log()
                 self.ready = False
                 self.readings = []
@@ -106,6 +107,7 @@ class Sensor:
         """ 
         Log a prepared reading, along with the date and time at which it was logged
         """
+        print("Logging"+self.name+"...")
         print(self.value)
         with open('sensor_data/'+self.name+self.date_time+".csv", "a",newline='') as file:
             csv_writer = csv.writer(file)
