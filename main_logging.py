@@ -89,7 +89,7 @@ class Sensor:
                 else:
                     self.reading = self.ser.readline().decode()
                     print(self.reading)
-                    self.reading = self.reading[0:-2]
+                    #self.reading = self.reading[0:-2]
                     self.value = self.reading
                     #self.value = list(map(int, self.value))
                     self.ready = True
