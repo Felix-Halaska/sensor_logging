@@ -7,7 +7,7 @@ import multiprocessing
 
 class Sensor:
       
-    def __init__(self,name,rate, port,baud,return_symbol,extra_char,read_line,date_time):
+    def __init__(self,name,rate, port,baud,return_symbol,extra_char,read_line,send,date_time):
         """
         Creates empty variables and reads yaml file
         """
@@ -25,6 +25,7 @@ class Sensor:
         self.read_line = read_line
         self.rate = rate
         self.date_time = date_time
+        self.send = send
 
         #write header row to csv file
         with open('sensor_data/'+self.name+self.date_time+".csv", "w") as file:
@@ -34,14 +35,18 @@ class Sensor:
         #establish serial connection
         self.ser = serial.Serial(port,baud,timeout=1)
         self.ser.flush()
-        # self.ser.write(b'C,1<cr>')
-        # print("Sensor 0 Command Sent")
+        
+        self.send()
 
 
     def new_thread(self):
         thread = multiprocessing.Process(target=self.read)
         thread.start()
     
+    def send(self):
+        byte_message = self.send.encode('utf-8')
+        self.ser.write(byte_message)
+
     def read(self):
         """
         Read sensor data and prepare it to be logged

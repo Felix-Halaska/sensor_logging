@@ -6,7 +6,7 @@ Atlas_Temp:
   Read_Line: False
   Return_Symbol: "\r"
   Extra_Char: 0
-  # Send: "C,1<cr>"
+  Send: "C,1<cr>"
 
 Atlas_Conductivity:
   Name: "COND"
@@ -16,7 +16,7 @@ Atlas_Conductivity:
   Read_Line: False
   Return_Symbol: "\r"
   Extra_Char: 0
-  # Send: "C,1<cr>"
+  Send: "C,1<cr>"
 
 Pressure:
   Name: "PRES"
@@ -26,3 +26,4 @@ Pressure:
   Read_Line: True
   Return_Symbol: "\r"
   Extra_Char: 1
+  Send: ''

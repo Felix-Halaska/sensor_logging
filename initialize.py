@@ -20,13 +20,14 @@ for sensor in sensor_list:
     return_symbol = sensor_info[sensor]["Return_Symbol"]
     extra_char = sensor_info[sensor]["Extra_Char"]
     read_line = sensor_info[sensor]["Read_Line"]
+    send = sensor_info[sensor]["Send"]
     date_time = str(datetime.now())
 
     with open('sensor_data/'+name+date_time+'.csv', 'w') as creating_new_csv_file: 
         pass 
     print("Empty File Created Successfully")
 
-    sensor = Sensor(name,rate,port,baud,return_symbol,extra_char,read_line,date_time)
+    sensor = Sensor(name,rate,port,baud,return_symbol,extra_char,read_line,send,date_time)
     sensors.append(sensor)
     Sensor.new_thread(sensor)
 
