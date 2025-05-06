@@ -1,0 +1,1 @@
+File to preserve the sensor data folder even when the data inside is deleted
