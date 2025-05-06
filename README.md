@@ -6,7 +6,7 @@ This system is meant to make logging data during experiements easy, letting lab 
 
 Step 1: Install Ubuntu 22.04 by following this tutorial, but make sure to image version 22.04 Desktop on the microSD card instead of 20.10.
 Step 2: Add user to the dialout and tty groups
-    - Check what groups your user is in
+- Check what groups your user is in
 		$ groups
     - If this list does not contain both dialout and tty they should be added using the following commands, replacing “user” with your username
 	    $ sudo usermod -a -G dialout user
