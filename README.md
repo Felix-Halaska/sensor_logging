@@ -29,6 +29,7 @@ Step 4: Set a static IP address
 - Under Routes add the IP address you copied earlier to the Address field, and 255.255.255.0 to the Netmask field
 
 ## VSCode Setup (Optional)
+
 Step 1: Install the Remotes extension
 - Connect your laptop and the Raspberry Pi to the same network
 - Navigate to the extensions tab and search “remotes”
@@ -38,4 +39,40 @@ Step 1: Install the Remotes extension
 - Enter your password
 - You can now edit files stored on the Raspberry Pi directly from VSCode!
 
+## Data Collection Setup
+
+Step 1: Open Sensor_Info.yml in VSCode
+
+Step 2: For each sensor that will be plugged in create a sensor instance in the YAML file which includes filling in the following fields:
+- A header name for the sensor. This should be unique
+- Name: The “name” of the sensor. This should be the data name that will be logged in the csv file, so include units if applicable!
+- Rate: The rate of the sensor. This is the hz, or data points logged per second. Make sure that this does not exceed your sensor’s capabilities.
+- Port: The port that the sensor is plugged into (In the form of ‘/dev/tty/USB0’ or ‘/dev/tty/USB1’). There are instructions to find this below in the appendix.
+- Baud: The baud rate that the sensor communicates at. This is usually listed on its datasheet
+- Read_Line: If you can read the sensor data line by line this should be set to True, if it can only read one character at a time it should be set to False. The default should be True
+- Return_Character: If you only read one character at a time from your sensor, set this to be the newline/return character (the character that signals a new line of data. If you read full lines, leave this field blank
+- Extra_Char: If you read only one character at a time and you read multiple newline/return characters, set this number to be the number of newline/return characters -1. If you read full lines from your sensor, leave this field blank
+- Send: If you need to initialize your sensor with a serial command, write it here, otherwise leave it blank
+
+## Data Collection Use
+
+Step 1: Power on the Raspberry Pi
+
+Step 2: Connect each sensor in the order in which you numbered them (i.e. the sensor assigned port “/dev/ttyUSB0” should be plugged in first, followed by “/dev/tty/USB1”
+
+Step 3: Connect your laptop to the same network the Raspberry Pi is connected to
+
+Step 4: ssh into the Raspberry Pi using the hostname previously set up
+
+Step 5: Navigate into the /sensor_logging directory
+
+Step 6: Run the logging script with the following command
+
+- $ python3 initialize.py
+
+Step 7: If a number of messages equal to the number of sensors plugged in print in the console saying “Empty File Created Successfully” the script is running correctly
+
+Step 8: If any error messages print, or only one “Empty File Created Successfully” message prints, kill the operation and try until it succeeds
+
+Step 9: The program should run indefinitely until it is stopped
 
